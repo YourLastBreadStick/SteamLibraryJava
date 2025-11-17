@@ -1,9 +1,7 @@
-package src.sql;
+package src;
 
 import src.Game;
 import src.GameDAO;
-import src.Gift;
-import src.GiftDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

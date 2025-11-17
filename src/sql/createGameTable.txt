@@ -1,0 +1,51 @@
+-- Make sure you're in the right database first:
+-- USE YourDatabaseName;
+-- GO
+
+IF OBJECT_ID(N'dbo.Games', N'U') IS NOT NULL
+    DROP TABLE dbo.Games;
+GO
+
+CREATE TABLE dbo.Games
+(
+    AppId                 INT IDENTITY(1,1) PRIMARY KEY,
+
+    Title                 NVARCHAR(200)       NOT NULL,
+    Developer             NVARCHAR(200)       NOT NULL,
+    Publisher             NVARCHAR(200)       NULL,
+    Price                 DECIMAL(10,2)       NOT NULL
+                          CONSTRAINT CK_Games_Price_NonNegative CHECK (Price >= 0),
+    ReviewScore           DECIMAL(4,2)        NULL
+                          CONSTRAINT CK_Games_ReviewScore_Range CHECK (ReviewScore >= 0 AND ReviewScore <= 100),
+    ReleaseDate           DATETIME2(0)        NULL,
+    PlayTime              DECIMAL(10,2)       NULL, -- hours played
+    AchievementsCompleted INT                 NOT NULL DEFAULT(0)
+                          CONSTRAINT CK_Games_AchievementsCompleted_NonNegative CHECK (AchievementsCompleted >= 0),
+    TotalAchievements     INT                 NOT NULL DEFAULT(0)
+                          CONSTRAINT CK_Games_TotalAchievements_NonNegative CHECK (TotalAchievements >= 0),
+    GameEngine            NVARCHAR(100)       NULL,
+    CreatedAtUtc          DATETIME2(0)        NOT NULL DEFAULT (SYSUTCDATETIME()),
+    UpdatedAtUtc          DATETIME2(0)        NOT NULL DEFAULT (SYSUTCDATETIME()),
+    RowVer                ROWVERSION
+);
+GO
+
+-- Auto-update UpdatedAtUtc on changes
+CREATE OR ALTER TRIGGER dbo.trg_Games_SetUpdatedAt
+ON dbo.Games
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE g
+      SET UpdatedAtUtc = SYSUTCDATETIME()
+    FROM dbo.Games g
+    JOIN inserted i ON g.AppId = i.AppId;
+END;
+GO
+
+-- Helpful indexes
+CREATE INDEX IX_Games_Title ON dbo.Games(Title);
+CREATE INDEX IX_Games_Developer_Publisher ON dbo.Games(Developer, Publisher);
+CREATE INDEX IX_Games_ReleaseDate ON dbo.Games(ReleaseDate);
+GO

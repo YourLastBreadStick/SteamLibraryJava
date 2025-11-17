@@ -1,0 +1,5 @@
+INSERT INTO dbo.Games
+(Title, Developer, Publisher, Price, ReviewScore, ReleaseDate, PlayTime, AchievementsCompleted, TotalAchievements, GameEngine)
+VALUES
+('Deep Rock Galactic', 'Ghost Ship Games', 'Coffee Stain Publishing', 39.99, 100, '2020-05-13', 2203.6, 69, 69, 'Unreal Engine')
+;

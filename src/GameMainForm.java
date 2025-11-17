@@ -18,7 +18,7 @@ public class GameMainForm extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GameController.fxml")));
         primaryStage.setTitle("Steam Library Manager");
-        primaryStage.setScene(new Scene(root, 389,638));
+        primaryStage.setScene(new Scene(root, 1000,652));
         primaryStage.show();
     }
 }

@@ -74,7 +74,7 @@ public class GameDAO {
     public List<Game> findAll() throws SQLException {
         final String sql = "SELECT * FROM " + TABLE + " ORDER BY Title DESC, AppId";
         List<Game> list = new ArrayList<>();
-        try (Connection c = GiftDB.getConnection();
+        try (Connection c = GameDB.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) list.add(map(rs));
@@ -133,7 +133,7 @@ public class GameDAO {
 
         // Proceed with deletion
         final String sql = "DELETE FROM " + TABLE + " WHERE IndexId = ?";
-        try (Connection c = GiftDB.getConnection();
+        try (Connection c = GameDB.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, id);
             int affectedRows = ps.executeUpdate();
