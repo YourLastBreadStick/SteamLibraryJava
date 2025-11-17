@@ -138,10 +138,10 @@ public class Game {
             "Play Time: " + playTime + "\n";
             if (totalAchievements > 0){
                 double percent = (((double) 100 /totalAchievements)*achievementsCompleted);
-                log += "Achievements: " + achievementsCompleted + "/" + totalAchievements + " - " + formatPercent(percent) + "%";
+                log += "Achievements: " + achievementsCompleted + "/" + totalAchievements + " - " + formatPercent(percent) + "%\n";
             }
         log +=
-            "\nGame Engine: " + gameEngine;
+            "Game Engine: " + gameEngine;
         return log;
     }
     public String formatCurrency(double amount) {

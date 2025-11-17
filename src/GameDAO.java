@@ -72,7 +72,7 @@ public class GameDAO {
 
 
     public List<Game> findAll() throws SQLException {
-        final String sql = "SELECT * FROM " + TABLE + " ORDER BY Title DESC, AppId";
+        final String sql = "SELECT * FROM " + TABLE + " ORDER BY Title ASC, AppId";
         List<Game> list = new ArrayList<>();
         try (Connection c = GameDB.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
